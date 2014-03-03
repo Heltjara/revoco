@@ -2,6 +2,7 @@ V=0.6
 CFLAGS=-Os -DVERSION=\"$(V)\" -Wall
 LDFLAGS=-s
 
+all: revoco
 revoco: revoco.o
 
 clean:
