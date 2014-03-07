@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="usbmisc", SUBSYSTEMS=="usb", ATTRS{idProduct}=="c51a", ATTRS{idVendor}=="046d", MODE="0666"
