@@ -277,15 +277,21 @@ static void mx_cmd(int fd, int b1, int b2, int b3)
 static int mx_query(int fd, int b1, int *res)
 {
 	int buf[6] = { first_byte, 0x81, b1, 0, 0, 0 };
-  int i;
+	int i;
 
 	send_report(fd, 0x10, buf, 6);
 	res[0] = -1;
 	query_report(fd, 0x10, res, 6);
 
-	if ((res[0] != 0x01 || res[1] != 0x81 || (res[2] != 0xb1 && res[2] != 0x08)) &&
-	    ((res[0] != 0x02 && res[0] != 0x01) || res[1] != 0x81 ||
-	        (res[2] != 0x0d && res[2] != 0x08)))
+	if ((
+		res[0]  != 0x01 ||
+		res[1]  != 0x81 ||
+		(res[2] != 0xb1 && res[2] != 0x08)
+	) && (
+		(res[0] != 0x02 && res[0] != 0x01) ||
+		res[1]  != 0x81                    ||
+		(res[2] != 0x0d && res[2] != 0x08)
+	))
 	{
 		printf("bad answer:");
 		for (i = 0; i < 6; ++i)
@@ -435,7 +441,7 @@ static void configure(int handle, int argc, char **argv)
 				printf("battery level %d%%, %s\n", buf[3], st);
 			}
 		}
-		
+
 		/*** debug commands ***/
 		else if (strneq(argv[i], "raw", 3))
 		{
@@ -569,3 +575,5 @@ int main(int argc, char **argv)
 	close_dev(handle);
 	exit(0);
 }
+
+/* EOF */
